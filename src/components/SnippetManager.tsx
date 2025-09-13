@@ -1,7 +1,9 @@
+"use client";
 import React, { useState } from 'react';
 import Card from './Card';
 import Button from './Button';
 import Input from './Input';
+
 
 interface Snippet {
   id: string;
