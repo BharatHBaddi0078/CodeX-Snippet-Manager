@@ -5,8 +5,22 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 export default function Home() {
+  const words = [
+    {
+      text: "CodeX",
+      className: "text-blue-500 dark:text-blue-500",
+    },
+    {
+      text: "Snippet",
+    },
+    {
+      text: "Manager",
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background p-6">
       <div className="absolute top-4 right-4">
@@ -15,7 +29,9 @@ export default function Home() {
       <div className="flex flex-col items-center space-y-8">
         <BackgroundGradient className="rounded-[22px] w-full max-w-md">
           <Card className="w-full text-center border-0 bg-white dark:bg-zinc-900">
-            <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-black">CodeX Snippet Manager</h1>
+            <div className="mb-4">
+              <TypewriterEffectSmooth words={words} />
+            </div>
             <p className="mb-6 text-muted-foreground">A modern Next.js app with Clerk authentication and code snippet management.</p>
             <div className="flex flex-col gap-3 mb-6">
               <SignedOut>
