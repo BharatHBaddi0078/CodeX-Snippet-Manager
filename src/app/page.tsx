@@ -12,7 +12,7 @@ export default function Home() {
         <ThemeToggle />
       </div>
       <Card className="w-full max-w-md text-center">
-        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-300">CodeX Snippet Manager</h1>
+        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-black">CodeX Snippet Manager</h1>
         <p className="mb-6 text-muted-foreground">A modern Next.js app with Clerk authentication and code snippet management.</p>
         <div className="flex flex-col gap-3 mb-6">
           <SignedOut>
