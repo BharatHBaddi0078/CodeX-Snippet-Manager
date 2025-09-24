@@ -96,9 +96,12 @@ export default Counter;`,
 export const useSnippets = () => {
   const [snippets, setSnippets] = useState<CodeSnippet[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Load from localStorage or use defaults
+    // Only load from localStorage once on mount
+    if (isLoaded) return;
+
     const savedSnippets = localStorage.getItem(STORAGE_KEY);
     const savedCategories = localStorage.getItem(CATEGORIES_KEY);
     
@@ -122,7 +125,8 @@ export const useSnippets = () => {
     
     if (savedCategories) {
       try {
-        setCategories(JSON.parse(savedCategories));
+        const parsedCategories = JSON.parse(savedCategories);
+        setCategories(parsedCategories);
       } catch (error) {
         console.error('Error parsing saved categories:', error);
         setCategories(defaultCategories);
@@ -130,13 +134,21 @@ export const useSnippets = () => {
     } else {
       setCategories(defaultCategories);
     }
-  }, []);
+
+    setIsLoaded(true);
+  }, [isLoaded]);
 
   useEffect(() => {
-    // Save to localStorage whenever snippets change
+    // Only save to localStorage after initial load is complete
+    if (!isLoaded) return;
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snippets));
-    
-    // Update category counts
+  }, [snippets, isLoaded]);
+
+  useEffect(() => {
+    // Update category counts whenever snippets change
+    if (!isLoaded) return;
+
     const updatedCategories = categories.map(cat => ({
       ...cat,
       count: snippets.filter(snippet => snippet.category === cat.name).length,
@@ -144,7 +156,7 @@ export const useSnippets = () => {
     
     setCategories(updatedCategories);
     localStorage.setItem(CATEGORIES_KEY, JSON.stringify(updatedCategories));
-  }, [snippets, categories.length]); // Only depend on categories.length to avoid infinite loop
+  }, [snippets, isLoaded]); // Remove categories from dependencies to prevent loop
 
   const addSnippet = (snippet: Omit<CodeSnippet, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newSnippet: CodeSnippet = {
