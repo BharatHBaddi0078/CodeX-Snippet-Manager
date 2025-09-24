@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { SearchBar } from '@/components/SearchBar';
 import { SnippetList } from '@/components/SnippetList';
 import { SnippetEditor } from '@/components/SnippetEditor';
 import { SnippetViewer } from '@/components/SnippetViewer';
 import { SnippetSidebar } from '@/components/SnippetSidebar';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { useSnippets } from '@/hooks/useSnippets';
@@ -131,10 +132,13 @@ export default function CodeSnippetManager() {
                   />
                 </div>
               </div>
-              <Button onClick={handleNewSnippet}>
-                <Plus className="h-4 w-4 mr-2" />
-                New Snippet
-              </Button>
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <Button onClick={handleNewSnippet}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Snippet
+                </Button>
+              </div>
             </div>
           </div>
 
